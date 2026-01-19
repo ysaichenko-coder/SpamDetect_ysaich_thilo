@@ -3,8 +3,9 @@ import pandas as pd
 import os
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
+import joblib
 
 path = './data'
 csv_path = os.path.join(path, 'spam.csv')
@@ -16,15 +17,16 @@ X_train_features = feature_extraction.fit_transform(X_train)
 X_test_features = feature_extraction.transform(X_test)
 print(data['v1'])
 print(Y_test)
-model = LogisticRegression()
+model = SVC(kernel='sigmoid', C=1.0)
 model.fit(X_train_features, Y_train)
 prediction = model.predict(X_test_features)
 accuracy = accuracy_score(Y_test, prediction)
 print('accuracy on test',accuracy*100,'%')
-input = ["Hello mom, are we having dinner tonight?", 
-    "URGENT! You have won a FREE iPhone. Click here", 
-    "Call me back later",                             
-    "Congratulations, you won 1000$ prize money",     
+joblib.dump(model,'model.joblib')
+input = ["Hello mom, are we having dinner tonight?",
+    "URGENT! You have won a FREE iPhone. Click here",
+    "Call me back later",
+    "Congratulations, you won 1000$ prize money",
     "Hey bro what's up"]
 input_features = feature_extraction.transform(input)
 prediction = model.predict(input_features)
