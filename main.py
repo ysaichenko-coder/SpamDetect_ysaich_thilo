@@ -50,7 +50,8 @@ if __name__ == '__main__':
         print(f'{model.__class__.__name__} accuracy on test: {accuracy * 100:.2f}%')
 
     # save best model
-    trainer.save_model(modelSVC, 'model.joblib')
+    trainer.save_model(modelSVC, 'modelSVC.joblib')
+    trainer.save_model(modelLR, 'modelLR.joblib')
 
     # test predictions
     test_messages = [
